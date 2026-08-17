@@ -1,0 +1,290 @@
+
+SQL> Create table Student(
+  2  Studentno Number(5) Primary Key,
+  3  Studentname Varchar2(20),
+  4  Dob Date,
+  5  Fees Number(5));
+
+Table created.
+
+SQL> desc Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNO                                 NOT NULL NUMBER(5)
+ STUDENTNAME                                        VARCHAR2(20)
+ DOB                                                DATE
+ FEES                                               NUMBER(5)
+
+SQL> INSERT INTO Student
+  2  Values (159,'Vedadri',TO_DATE('03-JUl-2004','DD-MON-YYYY'),50000);
+
+1 row created.
+
+SQL> INSERT INTO Student
+  2  Values (156,'Prasad',TO_DATE('13-Jun-2005','DD-MON-YYYY'),70000);
+
+1 row created.
+
+SQL> SELECT * FROM Student;
+
+ STUDENTNO STUDENTNAME          DOB             FEES
+---------- -------------------- --------- ----------
+       159 Vedadri              03-JUL-04      50000
+       156 Prasad               13-JUN-05      70000
+
+
+SQL> CREATE TABLE Employee (
+  2      Empno NUMBER(4) CONSTRAINT Emp_pkey PRIMARY KEY,
+  3      Ename VARCHAR2(20),
+  4      Job   VARCHAR2(20),
+  5      Sal   NUMBER(5)
+  6  );
+
+Table created.
+
+SQL> desc Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNO                                 NOT NULL NUMBER(5)
+ STUDENTNAME                                        VARCHAR2(20)
+ DOB                                                DATE
+ FEES                                               NUMBER(5)
+
+
+SQL> desc Student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNO                                 NOT NULL NUMBER(5)
+ STUDENTNAME                                        VARCHAR2(20)
+ DOB                                                DATE
+ FEES                                               NUMBER(5)
+
+SQL> desc Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(20)
+ JOB                                                VARCHAR2(20)
+ SAL                                                NUMBER(5)
+
+SQL> INSERT INTO Employee
+  2  values(200,'vedadri','Manager',75000);
+
+1 row created.
+
+SQL> INSERT INTO Employee
+  2  values(250,'Ranganatha','CEO',95000);
+
+1 row created.
+
+SQL> SELECT * FROM Employee;
+
+     EMPNO ENAME                JOB                         SAL
+---------- -------------------- -------------------- ----------
+       200 vedadri              Manager                   75000
+       250 Ranganatha           CEO                       95000
+
+
+SQL> Create table Employee1(
+  2  Empno Number(4),
+  3  Ename Varchar2(20),
+  4  Dob Date,
+  5  Sal Number(5),Constraint emp1_pkey Primary Key(empno));
+
+Table created.
+
+SQL> desc Employee1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(20)
+ DOB                                                DATE
+ SAL                                                NUMBER(5)
+
+
+
+SQL> INSERT INTO Employee1
+  2  values(135,'Tanooj', TO_date('01-oct-2006','DD-MON-YYYY'),25000);
+
+1 row created.
+
+SQL> desc Employee1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(20)
+ DOB                                                DATE
+ SAL                                                NUMBER(5)
+
+
+
+
+SQL> CREATE TABLE Dept (
+  2      Deptno NUMBER(2) PRIMARY KEY,
+  3      Dname  VARCHAR2(20)
+  4  );
+
+Table created.
+
+SQL> DESC Dept;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(2)
+ DNAME                                              VARCHAR2(20)
+
+SQL> CREATE TABLE Employee2 (
+  2      Empno  NUMBER(4),
+  3      Ename  VARCHAR2(10),
+  4      Deptno NUMBER(2) CONSTRAINT Emp2_FKey REFERENCES Dept(Deptno),
+  5      Sal    NUMBER(5)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO Employee2
+  2  values(135,'Tanooj',01 ,25000);
+INSERT INTO Employee2
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (A159.EMP2_FKEY) violated - parent key not
+found
+
+
+SQL> INSERT INTO Employee2
+  2  values(135,'Tanooj',1,25000);
+INSERT INTO Employee2
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (A159.EMP2_FKEY) violated - parent key not
+found
+
+
+SQL> INSERT INTO Dept (Deptno, Dname)
+  2  VALUES (1, 'Sales');
+
+1 row created.
+
+SQL> INSERT INTO Employee2
+  2  values(135,'Tanooj',1,25000);
+
+1 row created.
+
+SQL> SELECT * FROM Employee2;
+
+     EMPNO ENAME          DEPTNO        SAL
+---------- ---------- ---------- ----------
+       135 Tanooj              1      25000
+
+
+SQL> Create table students3(
+  2  Stuno Number(6),
+  3  Stuname Varchar2(20),
+  4  Deptno Number(2),
+  5  Fees Number(5) constraint Stu_FKey References Dept(deptno));
+
+Table created.
+
+
+
+SQL> CREATE TABLE Students (
+  2      RegNo  NUMBER(6) CONSTRAINT Stu_PK PRIMARY KEY,
+  3      Name   VARCHAR2(30),
+  4      Age    NUMBER(2) CONSTRAINT Stu_Age_CK CHECK (Age >= 18),
+  5      Email  VARCHAR2(50) CONSTRAINT Stu_Email_UK UNIQUE,
+  6      DeptNo NUMBER(2) CONSTRAINT Stu_Dept_FK REFERENCES Dept(DeptNo)
+  7  );
+
+Table created.
+
+SQL> desc Students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER(6)
+ NAME                                               VARCHAR2(30)
+ AGE                                                NUMBER(2)
+ EMAIL                                              VARCHAR2(50)
+ DEPTNO                                             NUMBER(2)
+
+
+
+SQL> Create table Dept1(
+  2  dept_id INT PRIMARY KEY,
+  3  dept_name VARCHAR(100)
+  4  );
+
+Table created.
+
+
+SQL> INSERT INTO Dept1 (dept_id, dept_name)
+  2  VALUES (1, 'CSE');
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Dept1 (dept_id, dept_name)
+  2  VALUES (2, 'ECE');
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Dept1 (dept_id, dept_name)
+  2  VALUES (3, 'IT');
+
+1 row created.
+
+
+
+
+SQL> desc Students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER(6)
+ NAME                                               VARCHAR2(30)
+ AGE                                                NUMBER(2)
+ EMAIL                                              VARCHAR2(50)
+ DEPTNO                                             NUMBER(2)
+
+
+
+SQL> INSERT INTO Students
+  2  values (159,'RAM',19,'ram@gmail.com',1);
+
+1 row created.
+
+SQL> SELECT * FROM Students;
+
+     REGNO NAME                                  AGE
+---------- ------------------------------ ----------
+EMAIL                                                  DEPTNO
+-------------------------------------------------- ----------
+       159 RAM                                    19
+ram@gmail.com                                               1
+
+
+
+
+SQL> CREATE TABLE Students1 (
+  2      RegNo   NUMBER(6) CONSTRAINT Stud_PK PRIMARY KEY,
+  3      DeptNo  NUMBER(2) CONSTRAINT Stud_Dept_FK REFERENCES Dept(DeptNo),
+  4      Age     NUMBER(2) CONSTRAINT Stud_Age_CK CHECK (Age >= 18),
+  5      Gender  VARCHAR2(10),
+  6      Email   VARCHAR2(50) CONSTRAINT Stud_Email_UK UNIQUE
+  7      );
+
+Table created.
+
+SQL> Insert into Students1
+  2  values(159,1,19,'m','11249A159@gmail.com');
+
+1 row created.
+
+SQL> SELECT * FROM Students1;
+
+     REGNO     DEPTNO        AGE GENDER
+---------- ---------- ---------- ----------
+EMAIL
+--------------------------------------------------
+       159          1         19 m
+11249A159@gmail.com
+
+

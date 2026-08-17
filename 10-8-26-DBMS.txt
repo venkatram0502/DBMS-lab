@@ -1,0 +1,412 @@
+
+SQL> drop table student1;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT1 (
+  2      STUDENTNAME VARCHAR2(20),
+  3      STUREG NUMBER(7),
+  4      DEPARTMENT_ID NUMBER(38),
+  5      COURSE VARCHAR2(20),
+  6      FEES NUMBER(10,2)
+  7  );
+
+Table created.
+
+SQL> ALTER TABLE STUDENT1
+  2  ADD CONSTRAINT PK_STUDENT1
+  3  PRIMARY KEY (STUREG);
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT1
+  2  MODIFY STUDENTNAME VARCHAR2(20) NOT NULL;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT1
+  2  MODIFY COURSE VARCHAR2(20) NOT NULL;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT1
+  2  MODIFY FEES NUMBER(10,2) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT1
+  2  ADD CONSTRAINT UQ_STUDENT1_NAME
+  3  UNIQUE (STUDENTNAME);
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT1
+  2  ADD CONSTRAINT CK_STUDENT1_FEES
+  3  CHECK (FEES > 0);
+
+Table altered.
+
+SQL> DESC DEPT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(2)
+ DNAME                                              VARCHAR2(20)
+
+SQL> SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+  2  FROM USER_CONSTRAINTS
+  3  WHERE TABLE_NAME = 'DEPT';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SYS_C0028534                   P
+
+SQL> ALTER TABLE STUDENT1
+  2  ADD CONSTRAINT FK_STUDENT1_DEPT
+  3  FOREIGN KEY (DEPARTMENT_ID)
+  4  REFERENCES DEPT(DEPTNO);
+
+Table altered.
+SQL> INSERT INTO STUDENT1
+  2  VALUES ('prasad', 159, 1, 'B.E', 35000);
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+prasad                      159             1 B.E                       35000
+
+SQL> INSERT INTO STUDENT1
+  2  VALUES ('vedadri', 180, 1, 'B.E', 45000);
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+prasad                      159             1 B.E                       35000
+vedadri                     180             1 B.E                       45000
+
+SQL> SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+  2  FROM USER_CONSTRAINTS
+  3  WHERE TABLE_NAME = 'STUDENT1';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+PK_STUDENT1                    P
+SYS_C0030931                   C
+SYS_C0030932                   C
+SYS_C0030933                   C
+UQ_STUDENT1_NAME               U
+CK_STUDENT1_FEES               C
+FK_STUDENT1_DEPT               R
+
+7 rows selected.
+
+SQL> ALTER TABLE STUDENT1
+  2  ADD EMAIL VARCHAR2(50);
+
+Table altered.
+
+SQL> desc STUDENT1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTNAME                               NOT NULL VARCHAR2(20)
+ STUREG                                    NOT NULL NUMBER(7)
+ DEPARTMENT_ID                                      NUMBER(38)
+ COURSE                                    NOT NULL VARCHAR2(20)
+ FEES                                      NOT NULL NUMBER(10,2)
+ EMAIL                                              VARCHAR2(50)
+
+
+SQL> INSERT INTO STUDENT1
+  2  VALUES ('arun', 181, 1, 'B.E', 55000, 'A180@email.com');
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+prasad                      159             1 B.E                       35000
+
+
+vedadri                     180             1 B.E                       45000
+
+
+arun                        181             1 B.E                       55000
+A180@email.com
+
+
+SQL> INSERT INTO STUDENT1
+  2  VALUES ('Ranganatha', 136, 1, 'B.E',40000, 'A136@email.com');
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+prasad                      159             1 B.E                       35000
+
+
+vedadri                     180             1 B.E                       45000
+
+
+arun                        181             1 B.E                       55000
+A180@email.com
+
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+Ranganatha                  136             1 B.E                       40000
+A136@email.com
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENTS3                      TABLE
+STUDENTS1                      TABLE
+STUDENTS                       TABLE
+STUDENT5                       TABLE
+STUDENT4                       TABLE
+STUDENT3                       TABLE
+STUDENT2                       TABLE
+STUDENT1                       TABLE
+EMPLOYEE2                      TABLE
+EMPLOYEE1                      TABLE
+EMPLOYEE                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT1                          TABLE
+DEPT                           TABLE
+BIN$dBXAnPmOREWn9r8/xQiAGA==$0 TABLE
+BIN$APczQ29gReCuG32PwCRpDQ==$0 TABLE
+
+15 rows selected.
+
+SQL> desc STUDENT5;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(10)
+ NAME                                               VARCHAR2(15)
+ DOB                                                DATE
+ DEPT                                               CHAR(15)
+
+SQL> UPDATE STUDENT1
+  2  SET EMAIL = 'student@gmail.com';
+
+4 rows updated.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+prasad                      159             1 B.E                       35000
+student@gmail.com
+
+vedadri                     180             1 B.E                       45000
+student@gmail.com
+
+arun                        181             1 B.E                       55000
+student@gmail.com
+
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+Ranganatha                  136             1 B.E                       40000
+student@gmail.com
+
+
+
+
+SQL> Insert into STUDENT1
+  2  values('Tanooj',135,1,'B.E',65000,'A135@gmail.com');
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+prasad                      159             1 B.E                       35000
+student@gmail.com
+
+vedadri                     180             1 B.E                       45000
+student@gmail.com
+
+arun                        181             1 B.E                       55000
+student@gmail.com
+
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+Ranganatha                  136             1 B.E                       40000
+student@gmail.com
+
+Tanooj                      135             1 B.E                       65000
+A135@gmail.com
+
+
+
+SQL> UPDATE STUDENT1
+  2  SET EMAIL = '180A@gmail.com'
+  3  ;
+
+5 rows updated.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+prasad                      159             1 B.E                       35000
+180A@gmail.com
+
+vedadri                     180             1 B.E                       45000
+180A@gmail.com
+
+arun                        181             1 B.E                       55000
+180A@gmail.com
+
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+--------------------------------------------------
+Ranganatha                  136             1 B.E                       40000
+180A@gmail.com
+
+Tanooj                      135             1 B.E                       65000
+180A@gmail.com
+
+
+SQL> COLUMN EMAIL FORMAT A25
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+-------------------------
+prasad                      159             1 B.E                       35000
+180A@gmail.com
+
+vedadri                     180             1 B.E                       45000
+180A@gmail.com
+
+arun                        181             1 B.E                       55000
+180A@gmail.com
+
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES
+-------------------- ---------- ------------- -------------------- ----------
+EMAIL
+-------------------------
+Ranganatha                  136             1 B.E                       40000
+180A@gmail.com
+
+Tanooj                      135             1 B.E                       65000
+180A@gmail.com
+
+
+SQL> SET LINESIZE 150
+SQL> SET PAGESIZE 50
+SQL> COLUMN EMAIL FORMAT A25
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES EMAIL
+-------------------- ---------- ------------- -------------------- ---------- -------------------------
+prasad                      159             1 B.E                       35000 180A@gmail.com
+vedadri                     180             1 B.E                       45000 180A@gmail.com
+arun                        181             1 B.E                       55000 180A@gmail.com
+Ranganatha                  136             1 B.E                       40000 180A@gmail.com
+Tanooj                      135             1 B.E                       65000 180A@gmail.com
+
+SQL> desc dept;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ DEPTNO                                                                              NOT NULL NUMBER(2)
+ DNAME                                                                                        VARCHAR2(20)
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME
+---------- --------------------
+         1 Sales
+
+SQL> INSERT INTO dept
+  2  VALUES (2, 'COMPUTER SCIENCE');
+
+1 row created.
+
+SQL> INSERT INTO dept
+  2  VALUES (3, 'ECE');
+
+1 row created.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME
+---------- --------------------
+         2 COMPUTER SCIENCE
+         3 ECE
+         1 Sales
+
+SQL> UPDATE DEPT
+  2  SET DNAME = 'COMPUTER SCIENCE'
+  3  WHERE DEPTNO = 1;
+
+1 row updated.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME
+---------- --------------------
+         2 COMPUTER SCIENCE
+         3 ECE
+         1 COMPUTER SCIENCE
+
+SQL> DELETE FROM DEPT
+  2  WHERE DEPTNO = 2;
+
+1 row deleted.
+
+SQL> INSERT INTO STUDENT1
+  2  VALUES ('ram', 182, 1, 'B.E', 30000, 'A159@gmail.com');
+
+1 row created.
+
+SQL> select * from STUDENT1;
+
+STUDENTNAME              STUREG DEPARTMENT_ID COURSE                     FEES EMAIL
+-------------------- ---------- ------------- -------------------- ---------- -------------------------
+prasad                      159             1 B.E                       35000 180A@gmail.com
+vedadri                     180             1 B.E                       45000 180A@gmail.com
+arun                        181             1 B.E                       55000 180A@gmail.com
+Ranganatha                  136             1 B.E                       40000 180A@gmail.com
+Tanooj                      135             1 B.E                       65000 180A@gmail.com
+ram                         182             1 B.E                       30000 A159@gmail.com
+
+6 rows selected.
