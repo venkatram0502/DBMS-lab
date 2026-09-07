@@ -1,0 +1,183 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Sep 7 10:17:42 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A159@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student(
+  2  student_id number(5) PRIMARY KEY,
+  3  student_name varchar2(20),
+  4  department varchar2(10),
+  5  marks number(3)
+  6  );
+
+Table created.
+
+SQL> Insert into student values(136,'RANGANATHA','CSE',80);
+
+1 row created.
+
+SQL> Insert into student values(135,'Tanooj','CSE',70);
+
+1 row created.
+
+SQL> Insert into student values(156,'Yasaswi','CSE',80);
+
+1 row created.
+
+SQL> Insert into student values(180,'Vedadri','CSE',82);
+
+1 row created.
+
+SQL> Insert into student values(159,'Venkatram','CSE',80);
+
+1 row created.
+
+SQL> select count(*) as total_students
+  2  from student;
+
+TOTAL_STUDENTS
+--------------
+             5
+
+SQL> select sum(marks) as total_marks
+  2  from student;
+
+TOTAL_MARKS
+-----------
+        392
+
+SQL> select avg(marks) as average_marks
+  2  from student;
+
+AVERAGE_MARKS
+-------------
+         78.4
+
+SQL> select max(marks) as highest_mark
+  2  from student;
+
+HIGHEST_MARK
+------------
+          82
+
+SQL> select min(marks) as lowest_mark
+  2  from student;
+
+LOWEST_MARK
+-----------
+         70
+
+SQL> select department,avg(marks) as avg_marks
+  2  from student
+  3  group by department;
+
+DEPARTMENT  AVG_MARKS
+---------- ----------
+CSE              78.4
+
+SQL> Insert into student values(400,'karthik','IT',86);
+
+1 row created.
+
+SQL> Insert into student values(230,'abhiram','Cyber',82);
+
+1 row created.
+
+SQL> Insert into student values(450,'amith','Cyber',79);
+
+1 row created.
+
+SQL> select department,avg(marks) as avg_marks
+  2  from student
+  3  group by department;
+
+DEPARTMENT  AVG_MARKS
+---------- ----------
+IT                 86
+CSE              78.4
+Cyber            80.5
+
+SQL> select department,count(*) as total_students
+  2  from student
+  3  group by department;
+
+DEPARTMENT TOTAL_STUDENTS
+---------- --------------
+IT                      1
+CSE                     5
+Cyber                   2
+
+SQL> select department,max(marks) as max_marks
+  2  from student
+  3  group by department;
+
+DEPARTMENT  MAX_MARKS
+---------- ----------
+IT                 86
+CSE                82
+Cyber              82
+
+SQL> select department,avg(marks) as avg_marks
+  2  from student
+  3  group by department
+  4  having avg(marks) > 82;
+
+DEPARTMENT  AVG_MARKS
+---------- ----------
+IT                 86
+
+SQL> select department,avg(marks) as avg_marks
+  2  from student
+  3  group by department
+  4  having avg(marks) > 75;
+
+DEPARTMENT  AVG_MARKS
+---------- ----------
+IT                 86
+CSE              78.4
+Cyber            80.5
+
+SQL> select department,count(*) as total_students
+  2  from student
+  3  group by department
+  4  having count(*) > 1;
+
+DEPARTMENT TOTAL_STUDENTS
+---------- --------------
+CSE                     5
+Cyber                   2
+
+SQL> select department,count(*) as no_of_students,
+  2  avg(marks) as avg_marks,max(marks) as highest_mark
+  3  from student
+  4  group by department
+  5  having avg(marks) > 75;
+
+DEPARTMENT NO_OF_STUDENTS  AVG_MARKS HIGHEST_MARK
+---------- -------------- ---------- ------------
+IT                      1         86           86
+CSE                     5       78.4           82
+Cyber                   2       80.5           82
+
+SQL> select * from student;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT      MARKS
+---------- -------------------- ---------- ----------
+       136 RANGANATHA           CSE                80
+       135 Tanooj               CSE                70
+       156 Yasaswi              CSE                80
+       180 Vedadri              CSE                82
+       159 Venkatram            CSE                80
+       400 karthik              IT                 86
+       230 abhiram              Cyber              82
+       450 amith                Cyber              79
+
+8 rows selected.
+
+SQL>

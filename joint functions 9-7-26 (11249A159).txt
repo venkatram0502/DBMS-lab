@@ -1,0 +1,280 @@
+SQL> create table department
+  2  (
+  3  dept_id number(3) PRIMARY KEY,
+  4  dept_name varchar2(20)
+  5  );
+
+Table created.
+
+SQL> insert into department values(101,'CSE');
+
+1 row created.
+
+SQL> insert into department values(102,'ECE');
+
+1 row created.
+
+SQL> insert into department values(103,'IT');
+
+1 row created.
+
+SQL> insert into department values(104,'MECH');
+
+1 row created.
+
+SQL> drop table student1;
+
+Table dropped.
+
+SQL> create table student1
+  2  (
+  3  student_id number(5) PRIMARY KEY,
+  4  student_name varchar2(20),
+  5  marks number(3),
+  6  dept_id number(3),
+  7  CONSTRAINT FK_DEPT FOREIGN KEY(DEPT_ID)
+  8  REFERENCES DEPARTMENT(DEPT_ID)
+  9  );
+
+Table created.
+
+SQL> insert into student values (1001,'RAM',85,101);
+
+1 row created.
+
+SQL> insert into student values (1002,'VEDADRI',95,102);
+
+1 row created.
+
+SQL> insert into student values (1003,'PRASAD',79,103);
+
+1 row created.
+
+SQL> insert into student values (1004,'RAVI',82,102);
+
+1 row created.
+
+
+
+SQL> DESC STUDENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(5)
+ STUDENT_NAME                                       VARCHAR2(20)
+ DEPARTMENT                                         VARCHAR2(10)
+ MARKS                                              NUMBER(3)
+
+SQL> DESC DEPARTMENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_ID                                   NOT NULL NUMBER(3)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT      MARKS
+---------- -------------------- ---------- ----------
+       136 RANGANATHA           CSE                80
+       135 Tanooj               CSE                70
+       156 Yasaswi              CSE                80
+       180 Vedadri              CSE                82
+       159 Venkatram            CSE                80
+       400 karthik              IT                 86
+       230 abhiram              Cyber              82
+       450 amith                Cyber              79
+      1001 RAM                  85                101
+      1002 VEDADRI              95                102
+      1003 PRASAD               79                103
+
+STUDENT_ID STUDENT_NAME         DEPARTMENT      MARKS
+---------- -------------------- ---------- ----------
+      1004 RAVI                 82                102
+
+12 rows selected.
+
+SQL> SELECT * FROM DEPARTMENT;
+
+   DEPT_ID DEPT_NAME
+---------- --------------------
+       101 CSE
+       102 ECE
+       103 IT
+       104 MECH
+
+
+SQL> SELECT S.STUDENT_ID, S.STUDENT_NAME, D.DEPT_NAME
+  2  FROM STUDENT S
+  3  INNER JOIN DEPARTMENT D
+  4      ON S.DEPARTMENT = D.DEPT_NAME;
+
+STUDENT_ID STUDENT_NAME         DEPT_NAME
+---------- -------------------- --------------------
+       136 RANGANATHA           CSE
+       135 Tanooj               CSE
+       156 Yasaswi              CSE
+       180 Vedadri              CSE
+       159 Venkatram            CSE
+       400 karthik              IT
+
+6 rows selected.
+
+
+SQL> SELECT S.STUDENT_NAME, D.DEPT_NAME
+  2  FROM STUDENT S
+  3  LEFT OUTER JOIN DEPARTMENT D
+  4      ON S.DEPARTMENT = D.DEPT_NAME;
+
+STUDENT_NAME         DEPT_NAME
+-------------------- --------------------
+Venkatram            CSE
+Vedadri              CSE
+Yasaswi              CSE
+Tanooj               CSE
+RANGANATHA           CSE
+karthik              IT
+VEDADRI
+PRASAD
+RAVI
+amith
+abhiram
+
+STUDENT_NAME         DEPT_NAME
+-------------------- --------------------
+RAM
+
+12 rows selected.
+
+
+SQL> SELECT S.STUDENT_NAME, D.DEPT_NAME
+  2  FROM STUDENT S
+  3  RIGHT OUTER JOIN DEPARTMENT D
+  4      ON S.DEPARTMENT = D.DEPT_NAME;
+
+STUDENT_NAME         DEPT_NAME
+-------------------- --------------------
+RANGANATHA           CSE
+Tanooj               CSE
+Yasaswi              CSE
+Vedadri              CSE
+Venkatram            CSE
+karthik              IT
+                     ECE
+                     MECH
+
+8 rows selected.
+
+SQL> SELECT S.STUDENT_NAME, D.DEPT_NAME
+  2  FROM STUDENT S
+  3  FULL OUTER JOIN DEPARTMENT D
+  4      ON S.DEPARTMENT = D.DEPT_NAME;
+
+STUDENT_NAME         DEPT_NAME
+-------------------- --------------------
+RANGANATHA           CSE
+Tanooj               CSE
+Yasaswi              CSE
+Vedadri              CSE
+Venkatram            CSE
+karthik              IT
+abhiram
+amith
+RAM
+VEDADRI
+PRASAD
+
+STUDENT_NAME         DEPT_NAME
+-------------------- --------------------
+RAVI
+                     ECE
+                     MECH
+
+14 rows selected.
+
+
+SQL> CREATE TABLE EMPLOYEE
+  2  (
+  3   EMP_ID NUMBER(5) PRIMARY KEY,
+  4   EMP_NAME VARCHAR2(30),
+  5   MANAGER_ID NUMBER(5)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (1,'RAJ',NULL);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (2,'ARUN',1);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE VALUES (3,'BALA',1);
+
+1 row created.
+
+SQL> SELECT E.EMP_NAME EMPLOYEE, M.EMP_NAME MANAGER
+  2  FROM EMPLOYEE E
+  3  LEFT JOIN EMPLOYEE M
+  4   ON E.MANAGER_ID = M.EMP_ID;
+
+EMPLOYEE                       MANAGER
+------------------------------ ------------------------------
+RAJ
+ARUN                           RAJ
+BALA                           RAJ
+
+SQL> SELECT STUDENT_NAME, MARKS
+  2  FROM STUDENT
+  3  WHERE MARKS >
+  4  (
+  5   SELECT AVG(MARKS)
+  6   FROM STUDENT
+  7  );
+
+STUDENT_NAME              MARKS
+-------------------- ----------
+RAM                         101
+VEDADRI                     102
+PRASAD                      103
+RAVI                        102
+
+
+SQL> SELECT STUDENT_NAME
+  2  FROM STUDENT
+  3  WHERE DEPARTMENT IN
+  4  (
+  5      SELECT DEPT_NAME
+  6      FROM DEPARTMENT
+  7      WHERE DEPT_NAME = 'CSE'
+  8  );
+
+STUDENT_NAME
+--------------------
+Venkatram
+Vedadri
+Yasaswi
+Tanooj
+RANGANATHA
+
+
+
+SQL> SELECT STUDENT_NAME, MARKS, DEPARTMENT
+  2  FROM STUDENT S1
+  3  WHERE MARKS =
+  4  (
+  5      SELECT MAX(MARKS)
+  6      FROM STUDENT S2
+  7      WHERE S1.DEPARTMENT = S2.DEPARTMENT
+  8  );
+
+STUDENT_NAME              MARKS DEPARTMENT
+-------------------- ---------- ----------
+Vedadri                      82 CSE
+karthik                      86 IT
+abhiram                      82 Cyber
+RAM                         101 85
+VEDADRI                     102 95
+PRASAD                      103 79
+RAVI                        102 82
+
+7 rows selected.
