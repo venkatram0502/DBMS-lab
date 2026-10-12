@@ -1,0 +1,157 @@
+05.10.2026
+SET SERVEROUTPUT ON;
+DECLARE
+ V_NAME STUDENT.STUDENT_NAME%TYPE;
+BEGIN
+ SELECT STUDENT_NAME
+ INTO V_NAME
+ FROM STUDENT
+ WHERE STUDENT_ID = 999;
+ DBMS_OUTPUT.PUT_LINE(V_NAME);
+EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ DBMS_OUTPUT.PUT_LINE('Error: No matching record found.');
+END;
+/
+
+None selected
+
+Skip to content
+Using Sri Chandrasekharendra Saraswathi Viswa Mahavidyalaya Mail with screen readers
+
+Conversations
+ 
+Program Policies
+Powered by Google
+Last account activity: 9 minutes ago
+Details
+SQL> DECLARE
+  2  N NUMBER;
+  3  BEGIN
+  4  N :=&N;
+  5  IF N > 0 THEN
+  6  DBMS_OUTPUT.PUT_LINE('The number is POSITIVE');
+  7  ELSIF N < 0 THEN
+  8  DBMS_OUTPUT.PUT_LINE('The number is NEGATIVE');
+  9  ELSE
+ 10  DBMS_OUTPUT.PUT_LINE('The number is zero');
+ 11  END IF;
+ 12  END;
+ 13  /
+Enter value for n: 25
+old   4: N :=&N;
+new   4: N :=25;
+The number is POSITIVE
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2  A NUMBER := 100;
+  3  B NUMBER :=0;
+  4  C NUMBER;
+  5  BEGIN
+  6  C:=A/B;
+  7  DBMS_OUTPUT.PUT_LINE('Result ='  || C);
+  8  EXCEPTION
+  9  WHEN ZERO_DIVIDE THEN
+ 10  DBMS_OUTPUT.PUT_LINE('Error:Division by zero is not allowed.');
+ 11  END;
+ 12  /
+Error:Division by zero is not allowed.
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE TABLE STU
+  2  (
+  3  STUDENT_ID NUMBER PRIMARY KEY,
+  4  STUDENT_NAME VARCHAR2(30)
+  5  );
+
+Table created.
+
+SQL> INSERT INTO STU VALUES(105,'ARUN');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DECLARE
+  2  V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3  BEGIN
+  4  SELECT STUDENT_NAME
+  5  INTO V_NAME
+  6  FROM STUDENT
+  7  WHERE STUDENT_ID= 999;
+  8  DBMS_OUTPUT.PUT_LINE(V_NAME);
+  9  EXCEPTION
+ 10  WHEN NO_DATA_FOUND THEN
+ 11  DBMS_OUTPUT.PUT_LINE('Error: No matching record found.');
+ 12  END;
+ 13  /
+Error: No matching record found.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2  V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3  BEGIN
+  4  SELECT STUDENT_NAME
+  5  INTO V_NAME
+  6  FROM STUDENT;
+  7  DBMS_OUTPUT.PUT_LINE(V_NAME);
+  8  EXCEPTION
+  9  WHEN TOO_MANY_ROWS THEN
+ 10  DBMS_OUTPUT.PUT_LINE('Error: Query returned multiple rows.');
+ 11  END;
+ 12  /
+Error: Query returned multiple rows.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> BEGIN
+  2  INSERT INTO STU VALUES(105,'RAJU');
+  3  EXCEPTION
+  4  WHEN DUP_VAL_ON_INDEX THEN
+  5  DBMS_OUTPUT.PUT_LINE('Error:Duplicate value violates unique constraint.');
+  6  END;
+  7  /
+Error:Duplicate value violates unique constraint.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2  V_NUM NUMBER(2);
+  3  BEGIN
+  4  V_NUM :=12345;
+  5  EXCEPTION
+  6  WHEN VALUE_ERROR THEN
+  7  DBMS_OUTPUT.PUT_LINE('Error : Value exceeds variable size.');
+  8  END;
+  9  /
+Error : Value exceeds variable size.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NUM NUMBER;
+  3  BEGIN
+  4   V_NUM := 10/0;
+  5  EXCEPTION
+  6   WHEN OTHERS THEN
+  7   DBMS_OUTPUT.PUT_LINE('SQLCODE : ' || SQLCODE);
+  8   DBMS_OUTPUT.PUT_LINE('SQLERRM : ' || SQLERRM);
+  9  END;
+ 10  /
+SQLCODE : -1476
+SQLERRM : ORA-01476: divisor is equal to zero
+
+PL/SQL procedure successfully completed.
+EXP1 2 PL SQLCOMMANDS.txt
+Displaying EXP1 2 PL SQLCOMMANDS.txt.
