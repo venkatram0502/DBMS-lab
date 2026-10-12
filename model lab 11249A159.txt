@@ -1,0 +1,155 @@
+
+SQL> create table employee(
+  2  Emp_id Number(6) primary key,
+  3  Emp_Name varchar2(20),
+  4  Department varchar2(20),
+  5  Age number(2),
+  6  salary number(6)
+  7  );
+
+Table created.
+
+SQL> Insert into employee values(136,'ranganatha','CSE',20,30000);
+
+1 row created.
+
+SQL> Insert into employee values(159,'venkatram','IT',19,45000);
+
+1 row created.
+
+SQL> Insert into employee values(156,'prasad','ECE',19,35000);
+
+1 row created.
+
+SQL> Insert into employee values(180,'vedadri','CSE',20,28000);
+
+1 row created.
+
+SQL> Select * from employee
+  2  Where department='CSE';
+
+    EMP_ID EMP_NAME             DEPARTMENT                  AGE     SALARY
+---------- -------------------- -------------------- ---------- ----------
+       136 ranganatha           CSE                          20      30000
+       180 vedadri              CSE                          20      28000
+
+SQL> Select * from employee
+  2  Where salary > 35000;
+
+    EMP_ID EMP_NAME             DEPARTMENT                  AGE     SALARY
+---------- -------------------- -------------------- ---------- ----------
+       159 venkatram            IT                           19      45000
+
+SQL> Select * from employee;
+
+    EMP_ID EMP_NAME             DEPARTMENT                  AGE     SALARY
+---------- -------------------- -------------------- ---------- ----------
+       136 ranganatha           CSE                          20      30000
+       159 venkatram            IT                           19      45000
+       156 prasad               ECE                          19      35000
+       180 vedadri              CSE                          20      28000
+
+SQL> drop table student;
+
+Table dropped.
+
+
+
+SQL> create table student(
+  2  Student_ID number(3),
+  3  Name varchar2(20),
+  4  Department varchar2(10),
+  5  Marks Number(3)
+  6  );
+
+Table created.
+
+SQL> Insert into student values(101,'Arun','CSE',90);
+
+1 row created.
+
+SQL> Insert into student values(102,'Ram','IT',89);
+
+1 row created.
+
+SQL> Insert into student values(103,'Ranganatha','CSE',85);
+
+1 row created.
+
+SQL> Insert into student values(104,'Veda','ECE',80);
+
+1 row created.
+
+SQL> Insert into student values(105,'Hari','ECE',92);
+
+1 row created.
+
+SQL> Insert into student values(106,'Prasad','EEE',90);
+
+1 row created.
+
+SQL> Select Department,AVG(Marks) as Average_marks
+  2  from student
+  3  Group by department;
+
+DEPARTMENT AVERAGE_MARKS
+---------- -------------
+IT                    89
+EEE                   90
+CSE                 87.5
+ECE                   86
+
+
+
+SQL> Select Department,AVG(Marks) as Average_marks
+  2  from student
+  3  Group by department
+  4  Having AVG(Marks) > 80;
+
+DEPARTMENT AVERAGE_MARKS
+---------- -------------
+IT                    89
+EEE                   90
+CSE                 87.5
+ECE                   86
+
+SQL> Select Department,AVG(Marks) as Average_marks
+  2  from student
+  3  Group by department
+  4  Having AVG(Marks) > 87;
+
+DEPARTMENT AVERAGE_MARKS
+---------- -------------
+IT                    89
+EEE                   90
+CSE                 87.5
+
+
+SQL> select department,
+  2  count(Student_id) as student_count,
+  3  Avg(marks) as average_marks
+  4  From student
+  5  Group by department
+  6  Having AVG(Marks) > 75;
+
+DEPARTMENT STUDENT_COUNT AVERAGE_MARKS
+---------- ------------- -------------
+IT                     1            89
+EEE                    1            90
+CSE                    2          87.5
+ECE                    2            86
+
+SQL> SELECT
+  2      COUNT(*) AS total_students,
+  3      SUM(marks) AS total_marks,
+  4      AVG(marks) AS average_marks,
+  5      MAX(marks) AS highest_marks,
+  6      MIN(marks) AS lowest_marks
+  7  FROM
+  8      student;
+
+TOTAL_STUDENTS TOTAL_MARKS AVERAGE_MARKS HIGHEST_MARKS LOWEST_MARKS
+-------------- ----------- ------------- ------------- ------------
+             6         526    87.6666667            92           80
+
+SQL>
